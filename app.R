@@ -12,10 +12,11 @@ library(shinydashboard)
 #library(plotly)
 #library(shinyjs)
 
+# Deploy: make sure options(repos = c(CRAN = "https://cran.rstudio.com"))
 
 ui <- dashboardPage(skin = "black",
                     
-  dashboardHeader(title = "Comparing Renewable Electriciy Options for Somerville", titleWidth = 650),
+  dashboardHeader(title = "Comparing Renewable Electricity Options for Somerville", titleWidth = 650),
 
   # Dashboard Menu
     dashboardSidebar(collapsed = TRUE,
@@ -69,7 +70,7 @@ ui <- dashboardPage(skin = "black",
       fluidPage(
         box(width = 12,
           title = "Somerville Community Choice Electricity (CCE) Aggregation",
-            "The Somerville Community Choice Electricity (CCE) Aggregation began July 2017 See the", 
+            "The Somerville Community Choice Electricity (CCE) Aggregation began July 2017.", br(), "See the", 
             a("Somerville CCE page", href="https://somervillecce.com"),
             "for more information."),
         
@@ -94,12 +95,14 @@ ui <- dashboardPage(skin = "black",
             "This is a 0.001 beta version, written in ",
             a("Shiny.", href="http://shiny.rstudio.com"),
             "For the time being, please leave any feedback on ",
-            a("this Reddit thread!"))
+            a("this Reddit thread!", href="https://www.reddit.com/r/Somerville/comments/6l57xs/compare_renewable_electricity_options_under_the/"),
+        "Fork on", a("Github.", href="https://github.com/danfbflynn/somervillecce/"))
         )
             ) # end tabItem about
    ) # end tabItems
   ) # end dashboardBdy
 ) 
+
 
 
 server <- function(input, output, session) {
