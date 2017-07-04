@@ -1,0 +1,11 @@
+name: somervillecce_compare
+title: SomervilleCCE_Compare
+account: flynn
+server: shinyapps.io
+appId: 194104
+bundleId: 890938
+url: https://flynn.shinyapps.io/somervillecce_compare/
+when: 1499146706.34378
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Reference/table5_a.xlsx
