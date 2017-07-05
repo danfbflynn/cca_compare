@@ -76,7 +76,8 @@ ui <- dashboardPage(skin = "black",
         
         box(width = 12,
           title = "This calculator",
-            "Translating the information on the", a("CCE mailer", href="https://somervilledev.files.wordpress.com/2016/10/somerville-opt-out-eversource-2017-final.pdf"), "to your bill is not straightforward. The new program will acheive stable electricity pricing, increase Somerville's commitment to local renewable energy, and provide residents an option to opt up to 100% local renewable energy as their source of electricity. This calculator attempts to provide an easy way to compare how the options will affect your bill, with a goal of showing that the benefits of 100% local renewable energy can be acheived with a relatively modest increase in a household's bill."),
+            "Translating the information on the", a("CCE mailer", href="https://somervilledev.files.wordpress.com/2016/10/somerville-opt-out-eversource-2017-final.pdf"), "to your bill is not straightforward. The new program will acheive stable electricity pricing, increase Somerville's commitment to local renewable energy, and provide residents an option to opt up to 100% local renewable energy as their source of electricity. This calculator attempts to provide an easy way to compare how the options will affect your bill, with a goal of showing that the benefits of 100% local renewable energy can be acheived with a relatively modest increase in a household's bill.", br(),br(),
+          "To select the Somerville 100% Local Green option,", a("contact Dynegy at (866) 220-5696, Monday through Friday from 9AM to 8PM EST, or via email at DESCustCare@Dynegy.com", href="https://somervillecce.com/how-to-select-the-somerville-100-local-green-option/"),". You will need your Eversource account nubmer."),
         
         box(width = 12,
             title = "Calculating an electrical bill",
@@ -94,9 +95,9 @@ ui <- dashboardPage(skin = "black",
             title = "Feedback",
             "This is a 0.001 beta version, written in ",
             a("Shiny.", href="http://shiny.rstudio.com"),
-            "For the time being, please leave any feedback on ",
+            "Please leave feedback on ",
             a("this Reddit thread!", href="https://www.reddit.com/r/Somerville/comments/6l57xs/compare_renewable_electricity_options_under_the/"),
-        "Fork on", a("Github.", href="https://github.com/danfbflynn/somervillecce/"))
+        "Or find this on ", a("GitHub.", href="https://github.com/danfbflynn/somervillecce/"))
         )
             ) # end tabItem about
    ) # end tabItems
@@ -157,7 +158,7 @@ server <- function(input, output, session) {
     
     paste("Your typical monthly bill would be <b>$",
           format(round(bill100 - bill5, 2), nsmall = 2), 
-          "</b> greater if you choose the 100% renewable option",
+          "</b> greater if you choose the 100% renewable option (Somerville 100% Local Green)",
           sep = "")
     
     })
@@ -170,7 +171,7 @@ server <- function(input, output, session) {
     r2 <- r1-1
     paste("This would be a <b>",
           round(100*(r2), 1),
-          "%</b> increase over the +5% renewable option",
+          "%</b> increase over the +5% renewable option (Somerville Local Green)",
           sep = "")
     
   })
