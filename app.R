@@ -15,7 +15,7 @@ library(shinydashboard)
 # Deploy: make sure options(repos = c(CRAN = "https://cran.rstudio.com"))
 
 ui <- dashboardPage(skin = "black",
-                    
+  
   dashboardHeader(title = "Comparing Renewable Electricity Options for Somerville", titleWidth = 650),
 
   # Dashboard Menu
@@ -29,11 +29,21 @@ ui <- dashboardPage(skin = "black",
   # Body
     dashboardBody(
     # Apply custom css here
-  #  tags$head(
-   #   tags$link(rel = "stylesheet", type = "text/css", href = "cosmo.css")),
+    tags$head(
+     tags$link(rel = "stylesheet", type = "text/css", href = "cosmo.css")),
    
    # useShinyjs(),
    
+      # Trying to customize the slider bar. Can we make it follow the page CSS?
+      
+      tags$style(HTML(".irs-bar {width: 100%; height: 12px; background: black; border-top: 1px solid black; border-bottom: 1px solid black;}")),
+      tags$style(HTML(".irs-bar-edge {background: black; border: 1px solid black; height: 12px; border-radius: 6px 6px 6px 6px;}")),
+      tags$style(HTML(".irs-line {border: 1px solid black; height: 11px;}")),
+     tags$style(HTML(".irs-grid-text {font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif; color: black; font-size: 15px}")),
+      tags$style(HTML(".irs-max {font-family: 'arial'; color: black;}")),
+      tags$style(HTML(".irs-min {font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif; color: black;}")),
+      tags$style(HTML(".irs-single {color:black; background:#ccffcc; font-size: 16px; font-weight: bold; font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif;}")),
+      
     tabItems(
      tabItem(tabName = "ratecompare",
     # Boxes need to be put in a row (or column)
