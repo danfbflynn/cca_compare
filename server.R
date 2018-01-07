@@ -10,13 +10,13 @@ server <- function(input, output, session) {
   }
   
   output$plot1 <- renderPlot({
-    plotcols <- c("palegreen3","palegreen4","deepskyblue")
+    plotcols <- c("palegreen3","palegreen4")#,"deepskyblue")
     
     bill5 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate5 * input$kwhslider
     bill100 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate100 * input$kwhslider
-    billprev <- input$custcharge + input$deliverycharges * input$kwhslider + input$rateprev * input$kwhslider
+    #billprev <- input$custcharge + input$deliverycharges * input$kwhslider + input$rateprev * input$kwhslider
     
-    plotdat <- c(bill5, bill100, billprev)
+    plotdat <- c(bill5, bill100)
     
     par(xpd=TRUE, cex = 1.25)
     
@@ -37,11 +37,13 @@ server <- function(input, output, session) {
          lwd = 0,
          labels = paste(
            c("+5% Renewable \n", 
-             "100% Renewable \n",
-             "Previous \n "),
+             "100% Renewable \n"
+             #,"Previous \n "
+             ),
            c(round(100*input$rate5, 1),
-             round(100*input$rate100, 1),
-             round(100*input$rateprev, 1)),
+             round(100*input$rate100, 1)
+             #,round(100*input$rateprev, 1)
+             ),
            "¢")
     )
   })

@@ -8,8 +8,6 @@
 
 library(shiny)
 library(shinydashboard)
-#library(ggplot2)
-#library(plotly)
 #library(shinyjs)
 
 # Deploy: make sure options(repos = c(CRAN = "https://cran.rstudio.com"))
@@ -35,6 +33,7 @@ ui <- dashboardPage(skin = "black",
                       # useShinyjs(),
                       
                       # Trying to customize the slider bar. Can we make it follow the page CSS?
+                      # Height of the number hovering over the slider is controlled in .irs-single, top: -25%. 
                       
                       tags$style(HTML(".irs-bar {width: 100%; height: 12px; background: black; border-top: 1px solid black; border-bottom: 1px solid black;}")),
                       tags$style(HTML(".irs-bar-edge {background: black; border: 1px solid black; height: 12px; border-radius: 6px 6px 6px 6px;}")),
@@ -42,7 +41,8 @@ ui <- dashboardPage(skin = "black",
                       tags$style(HTML(".irs-grid-text {font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif; color: black; font-size: 15px}")),
                       tags$style(HTML(".irs-max {font-family: 'arial'; color: black;}")),
                       tags$style(HTML(".irs-min {font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif; color: black;}")),
-                      tags$style(HTML(".irs-single {color:black; background:#ccffcc; font-size: 16px; font-weight: bold; font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif;}")),
+                      tags$style(HTML(".irs-single {color:black; background:#ffffff; font-size: 25px; font-weight: bold; font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif; top: -25%}")),
+                      tags$style(HTML(".irs-slider {width: 16px; height: 16px; top: 24px;}")),
                       
                       tabItems(
                         tabItem(tabName = "ratecompare",
@@ -64,14 +64,13 @@ ui <- dashboardPage(skin = "black",
                                   box(width = 12, title = "Electricity generation rates", 
                                       splitLayout(
                                         numericInput("rate5", "Default +5% renewable", value = 0.10538, step = 0.001),
-                                        numericInput("rate100", "Opt up 100% renewable", value = 0.13198, step = 0.001),
-                                        numericInput("rateprev", "Previous rate June 2017", value = 0.10759, step = 0.001)
+                                        numericInput("rate100", "Opt up 100% renewable", value = 0.13198, step = 0.001)
                                       ))),
                                 fluidRow(
                                   box(width = 12, title = "Electricity delivery rates", 
                                       splitLayout(
                                         numericInput("custcharge", "Customer account charge", value = 6.43, step = 0.50),
-                                        numericInput("deliverycharges", "Delivery charges", value = 0.092, step = 0.001)
+                                        numericInput("deliverycharges", "Delivery charges", value = 0.0938, step = 0.001)
                                       ))
                                 )
                         ), # End tabItem ratecompare
@@ -86,16 +85,16 @@ ui <- dashboardPage(skin = "black",
                                   
                                   box(width = 12,
                                       title = "This calculator",
-                                      "Translating the information on the", a("CCE mailer", href="https://somervilledev.files.wordpress.com/2016/10/somerville-opt-out-eversource-2017-final.pdf"), "to your bill is not straightforward. The new program will acheive stable electricity pricing, increase Somerville's commitment to local renewable energy, and provide residents an option to opt up to 100% local renewable energy as their source of electricity. This calculator attempts to provide an easy way to compare how the options will affect your bill, with a goal of showing that the benefits of 100% local renewable energy can be acheived with a relatively modest increase in a household's bill.", br(),br(),
-                                      "To select the Somerville 100% Local Green option,", a("contact Dynegy at (866) 220-5696, Monday through Friday from 9AM to 8PM EST, or via email at DESCustCare@Dynegy.com", href="https://somervillecce.com/how-to-select-the-somerville-100-local-green-option/"),". You will need your Eversource account nubmer."),
+                                      "Translating the information on the", a("CCE mailer", href="https://somervilledev.files.wordpress.com/2017/12/somerville-opt-out-chart-2018.pdf"), "to your bill takes a bit of work. This program aims to acheive stable electricity pricing, increase Somerville's commitment to local renewable energy, and provide residents an option to opt up to 100% local renewable energy as their source of electricity. This calculator provides an easy way to compare how the options will affect your bill, with a goal of showing that the benefits of 100% local renewable energy can be acheived with a relatively modest increase in a household's bill.", br(),br(),
+                                      "To select the Somerville 100% Local Green option,", a("contact Dynegy at (866) 220-5696, Monday through Friday from 9AM to 8PM EST, or via email at DESCustCare@Dynegy.com", href="https://somervillecce.com/how-to-select-the-somerville-100-local-green-option/"),". You will need your Eversource account nubmer.",br(), "Alternatively, fill out the information in", a("this form on the Somerville CCE site.", href = "https://somervillecce.com/opt-up-to-premium-100-local-green/")),
                                   
                                   box(width = 12,
                                       title = "Calculating an electrical bill",
                                       "A monthly bill is calculated as follows:", br(),
                                       tags$em("kWh * Generation Rate + kWh * Delivery Rate + Customer Charge"), br(), br(),
                                       "The Generation Rate is what is being changed by the CCE plan. By opting up to 100%, only the Generation Rate aspect would increase.",
-                                      a(img(src="https://somervilledev.files.wordpress.com/2016/10/somerville-chart.jpg", width = 700, alt = "CCE Chart"), href = "https://somervilledev.files.wordpress.com/2016/10/somerville-chart.jpg"),br(),
-                                      "Delivery Rates are composed of multiple items, see your Eversource bill for details. The delivery rates shown in the calculator by default are from June 2017 for a residential customer.",
+                                      a(img(src="https://somervilledev.files.wordpress.com/2017/12/somerville-opt-out-chart-2018.pdf", width = 700, alt = "CCE Chart"), href = "https://somervilledev.files.wordpress.com/2017/12/somerville-opt-out-chart-2018.pdf"),br(),
+                                      "Delivery Rates are composed of multiple items, see your Eversource bill for details. The delivery rates shown in the calculator by default are from January 2018 for a residential customer.",
                                       br(),
                                       "For more details on these rates, see the Eversource page on ",
                                       a("Understanding My Electricity Bill", href="https://www.eversource.com/Content/ema-c/residential/my-account/billing-payment/understanding-my-bill", ".")
@@ -103,11 +102,9 @@ ui <- dashboardPage(skin = "black",
                                   
                                   box(width = 12,
                                       title = "Feedback",
-                                      "This is a 0.001 beta version, written in ",
+                                      "This is a beta version, written in ",
                                       a("Shiny.", href="http://shiny.rstudio.com"),
-                                      "Please leave feedback on ",
-                                      a("this Reddit thread!", href="https://www.reddit.com/r/Somerville/comments/6l57xs/compare_renewable_electricity_options_under_the/"),
-                                      "Or find this on ", a("GitHub.", href="https://github.com/danfbflynn/somervillecce/"))
+                                      "Please leave feedback by making an Issue on", a("GitHub.", href="https://github.com/flynn-d/somervillecce/"), "or by contacting dan@flynnd.io")
                                 )
                         ) # end tabItem about
                       ) # end tabItems
