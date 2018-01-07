@@ -9,7 +9,7 @@
 library(shiny)
 library(shinydashboard)
 #library(ggplot2)
-#library(plotly)
+#library(plotly) 
 #library(shinyjs)
 
 # Deploy: make sure options(repos = c(CRAN = "https://cran.rstudio.com"))
@@ -44,7 +44,7 @@ ui <- dashboardPage(skin = "black",
       )),
     
     fluidRow(
-      box(plotOutput("plot1", height = 350)),
+      box(plotOutput("plot1", height = 550)),
   
              box(h2(htmlOutput("dollartext"))),
              box(h2(htmlOutput("pcttext")))
@@ -77,7 +77,7 @@ ui <- dashboardPage(skin = "black",
         box(width = 12,
           title = "This calculator",
             "Translating the information on the", a("CCE mailer", href="https://somervilledev.files.wordpress.com/2016/10/somerville-opt-out-eversource-2017-final.pdf"), "to your bill is not straightforward. The new program will acheive stable electricity pricing, increase Somerville's commitment to local renewable energy, and provide residents an option to opt up to 100% local renewable energy as their source of electricity. This calculator attempts to provide an easy way to compare how the options will affect your bill, with a goal of showing that the benefits of 100% local renewable energy can be acheived with a relatively modest increase in a household's bill.", br(),br(),
-          "To select the Somerville 100% Local Green option,", a("contact Dynegy at (866) 220-5696, Monday through Friday from 9AM to 8PM EST, or via email at DESCustCare@Dynegy.com", href="https://somervillecce.com/how-to-select-the-somerville-100-local-green-option/"),". You will need your Eversource account nubmer."),
+          "To select the Somerville 100% Local Green option,", a("contact Dynegy at (866) 220-5696, Monday through Friday from 9AM to 8PM EST, or via email at DESCustCare@Dynegy.com", href="https://somervillecce.com/how-to-select-the-somerville-100-local-green-option/"),". You will need your Eversource account number."),
         
         box(width = 12,
             title = "Calculating an electrical bill",
@@ -116,40 +116,61 @@ server <- function(input, output, session) {
   }
   
   output$plot1 <- renderPlot({
-    plotcols <- c("palegreen3","palegreen4","deepskyblue")
     
     bill5 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate5 * input$kwhslider
     bill100 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate100 * input$kwhslider
     billprev <- input$custcharge + input$deliverycharges * input$kwhslider + input$rateprev * input$kwhslider
     
-    plotdat <- c(bill5, bill100, billprev)
+    plotdat <- c(billprev, bill5, bill100)
     
-    par(xpd=TRUE, cex = 1.25)
+    plotcols <- c("cadetblue2", "palegreen3","palegreen4")
+    
+    pctrenewdefault <- c(12, 12, 12)
+    pctrenewplus <- c(0, 5, 88)
+    
+    d1 <- data.frame(rates = plotdat,
+               renewdefault = pctrenewdefault,
+               renewplus = pctrenewplus)
+    
+    # New idea: make xy scatter plot of pct renewable vs rate
+    
+    layout(matrix(c(1,2, nrow = 2)), 
+           heights = c(3, 5))
+    par(xpd=TRUE, cex = 1.25, mar = c(4, 4, 4, 2))
     
     bp <- barplot(plotdat,
-            ylim = c(0, roundUp(1.1*max(plotdat))),
-            ylab = "Monthly bill ($)",
-            xlab = "Rates",
-            col = plotcols,
-            main = "Typical Monthly Bill")
+                  ylim = c(0, roundUp(1.1*max(plotdat))),
+                  ylab = "Monthly bill ($)",
+                  xlab = "",
+                  col = plotcols,
+                  main = "Typical Monthly Bill")
     
-    text(x = bp, y = plotdat + max(plotdat) * 0.15,
+    text(x = bp1, y = plotdat + max(plotdat) * 0.15,
          labels = paste("$", format(
-                                     round(plotdat, 2),
-                                     nsmall = 2)),
+           round(plotdat, 2),
+           nsmall = 2)),
          cex = 1.5, font = 2)
+    
+   
+ 
+    bp1 <- barplot(t(as.matrix(d1[,2:3])), beside = F)
+    
     
     axis(1, at = bp, 
          lwd = 0,
          labels = paste(
-                  c("+5% Renewable \n", 
-                    "100% Renewable \n",
-                    "Previous \n "),
-                  c(round(100*input$rate5, 1),
-                    round(100*input$rate100, 1),
-                    round(100*input$rateprev, 1)),
-                  "¢")
-    )
+           c("Previous \n ",
+             "+5% Renewable \n", 
+             "100% Renewable \n"
+             ),
+           c(round(100*input$rateprev, 1),
+             round(100*input$rate5, 1),
+             round(100*input$rate100, 1)
+             ),
+           "¢")
+      )
+    
+
   })
   
   output$dollartext <- renderText({
