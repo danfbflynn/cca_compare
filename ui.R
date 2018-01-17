@@ -9,11 +9,8 @@
 library(shiny)
 library(shinydashboard)
 #library(shinyjs)
-
 # Deploy: make sure options(repos = c(CRAN = "https://cran.rstudio.com"))
-
 ui <- dashboardPage(skin = "black",
-                    
                     dashboardHeader(title = "Comparing Renewable Electricity Options for Somerville", titleWidth = 650),
                     
                     # Dashboard Menu
@@ -31,7 +28,6 @@ ui <- dashboardPage(skin = "black",
                         tags$link(rel = "stylesheet", type = "text/css", href = "cosmo.css")),
                       
                       # useShinyjs(),
-                      
                       # Trying to customize the slider bar. Can we make it follow the page CSS?
                       # Height of the number hovering over the slider is controlled in .irs-single, top: -25%. 
                       
@@ -70,7 +66,7 @@ ui <- dashboardPage(skin = "black",
                                   box(width = 12, title = "Electricity delivery rates", 
                                       splitLayout(
                                         numericInput("custcharge", "Customer account charge", value = 6.43, step = 0.50),
-                                        numericInput("deliverycharges", "Delivery charges", value = 0.0938, step = 0.001)
+                                        numericInput("deliverycharges", "Delivery charges", value = 0.09824, step = 0.00001)
                                       ))
                                 )
                         ), # End tabItem ratecompare
@@ -104,7 +100,7 @@ ui <- dashboardPage(skin = "black",
                                       title = "Feedback",
                                       "This is a beta version, written in ",
                                       a("Shiny.", href="http://shiny.rstudio.com"),
-                                      "Please leave feedback by making an Issue on", a("GitHub.", href="https://github.com/flynn-d/somervillecce/"), "or by contacting dan@flynnd.io")
+                                      "Please leave feedback by making an Issue on", a("GitHub", href="https://github.com/flynn-d/somervillecce/"), "or by contacting dan@flynnd.io")
                                 )
                         ) # end tabItem about
                       ) # end tabItems

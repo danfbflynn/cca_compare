@@ -14,10 +14,7 @@ server <- function(input, output, session) {
     
     bill5 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate5 * input$kwhslider
     bill100 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate100 * input$kwhslider
-    #billprev <- input$custcharge + input$deliverycharges * input$kwhslider + input$rateprev * input$kwhslider
-    
     plotdat <- c(bill5, bill100)
-    
     par(xpd=TRUE, cex = 1.25)
     
     bp <- barplot(plotdat,
@@ -46,6 +43,40 @@ server <- function(input, output, session) {
              ),
            "¢")
     )
+    }) # end plot1
+    
+  output$plot2 <- renderPlot({
+      plotcols <- c("palegreen3","palegreen4")
+      
+      bill5 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate5 * input$kwhslider
+      bill100 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate100 * input$kwhslider
+      plotdat <- c(bill5, bill100)
+      par(xpd=TRUE, cex = 1.25)
+      
+      bp <- barplot(plotdat,
+                    ylim = c(0, roundUp(1.1*max(plotdat))),
+                    ylab = "Monthly bill ($)",
+                    xlab = "Rates",
+                    col = plotcols,
+                    main = "Typical Monthly Bill")
+      
+      text(x = bp, y = plotdat + max(plotdat) * 0.15,
+           labels = paste("$", format(
+             round(plotdat, 2),
+             nsmall = 2)),
+           cex = 1.5, font = 2)
+      
+      axis(1, at = bp, 
+           lwd = 0,
+           labels = paste(
+             c("+5% Renewable \n", 
+               "100% Renewable \n"
+             ),
+             c(round(100*input$rate5, 1),
+               round(100*input$rate100, 1)
+             ),
+             "¢")
+      )
   })
   
   output$dollartext <- renderText({
