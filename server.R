@@ -1,9 +1,7 @@
 library(shiny)
 
 server <- function(input, output, session) {
-  
   ##addClass(selector = "body", class = "sidebar-collapse")
-  
   roundUp <- function(x, to = 100){
     # Function for rounding up to nearest 100
     to*(x%/%to + as.logical(x%%to))
@@ -48,9 +46,9 @@ server <- function(input, output, session) {
   output$plot2 <- renderPlot({
       plotcols <- c("palegreen3","palegreen4")
       
-      bill5 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate5 * input$kwhslider
-      bill100 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate100 * input$kwhslider
-      plotdat <- c(bill5, bill100)
+      co2.5 <- input$co2avoid * input$kwhslider
+      co2.100 <- input$co2avoid * input$kwhslider
+      plotdat <- c(co2.5, co2.100)
       par(xpd=TRUE, cex = 1.25)
       
       bp <- barplot(plotdat,
@@ -102,5 +100,19 @@ server <- function(input, output, session) {
           sep = "")
     
   })
-}
+
+  output$co2avoid <- renderText({
+    bill5 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate5 * input$kwhslider
+    bill100 <- input$custcharge + input$deliverycharges * input$kwhslider + input$rate100 * input$kwhslider
+    
+    r1 <- bill100/bill5
+    r2 <- r1-1
+    paste("This would be a <b>",
+          round(100*(r2), 1),
+          "%</b> increase over the +5% renewable option (Somerville Local Green)",
+          sep = "")
+    
+  })
+
+  }
 
