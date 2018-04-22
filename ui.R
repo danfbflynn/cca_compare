@@ -31,7 +31,6 @@ ui <- dashboardPage(skin = "black",
                       # useShinyjs(),
                       # Trying to customize the slider bar. Can we make it follow the page CSS?
                       # Height of the number hovering over the slider is controlled in .irs-single, top: -25%. 
-                      
                       tags$style(HTML(".irs-bar {width: 100%; height: 12px; background: black; border-top: 1px solid black; border-bottom: 1px solid black;}")),
                       tags$style(HTML(".irs-bar-edge {background: black; border: 1px solid black; height: 12px; border-radius: 6px 6px 6px 6px;}")),
                       tags$style(HTML(".irs-line {border: 1px solid black; height: 11px;}")),
@@ -39,39 +38,45 @@ ui <- dashboardPage(skin = "black",
                       tags$style(HTML(".irs-max {font-family: 'arial'; color: black;}")),
                       tags$style(HTML(".irs-min {font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif; color: black;}")),
                       tags$style(HTML(".irs-single {color:black; background:#ffffff; font-size: 25px; font-weight: bold; font-family: 'Segoe UI', 'Source Sans Pro', Calibri, Candara, Arial, sans-serif; top: -25%}")),
-                      tags$style(HTML(".irs-slider {width: 16px; height: 16px; top: 24px;}")),
-                      tabItems(  # Boxes need to be put in a row (or column)
-                        tabItem(tabName = "ratecompare",
-                                fluidRow(
-                                  box(width = 12,
-                                      title = "Typical Monthly Electricity Usage ",
-                                      sliderInput("kwhslider", "Usage in kWh:", 1, 1000, 450)
-                                  )),
-                                fluidRow(
-                                  box(plotOutput("plot1", height = 350)),
-                                  box(h2(htmlOutput("dollartext"))),
-                                  box(h2(htmlOutput("pcttext")))
-                                ),
-                                fluidRow(
-                                  box(width = 12, title = "Electricity generation rates", 
-                                      splitLayout(
-                                        numericInput("rate5", "Default +5% renewable", value = 0.10538, step = 0.001),
-                                        numericInput("rate100", "Opt up 100% renewable", value = 0.13198, step = 0.001)
-                                      ))),
-                                fluidRow(
-                                  box(width = 12, title = "Electricity delivery rates", 
-                                      splitLayout(
-                                        numericInput("custcharge", "Customer account charge", value = 6.43, step = 0.50),
-                                        numericInput("deliverycharges", "Delivery charges", value = 0.09824, step = 0.00001)
-                                      ))
-                                ),
-                                fluidRow(
-                                  box(width = 12, title = "CO[2] avoided by choosing renewable energy", 
-                                      splitLayout(
-                                        numericInput("co2avoid", "Pounds of CO[2] avoided per kWh of renewable energy", value = .857, step = 0.001))
-                                      ))
-                        ), # End tabItem ratecompare
-                        tabItem(tabName = "about",
+          tags$style(HTML(".irs-slider {width: 16px; height: 16px; top: 24px;}")),
+          tabItems(  # Boxes need to be put in a row (or column)
+          tabItem(tabName = "ratecompare",
+            fluidRow(
+             box(width = 12,
+             title = "Typical Monthly Electricity Usage ",
+             sliderInput("kwhslider", "Usage in kWh:", 1, 1000, 450))
+             ),
+            fluidRow(
+             box(plotOutput("plot1", height = 450)),
+             box(h2(htmlOutput("dollartext"))),
+             box(h2(htmlOutput("pcttext")))
+             ,box(h2(htmlOutput("co2avoid")))
+             ),
+            
+            fluidRow(
+              box(plotOutput("plot0", height = 350)),
+              box(plotOutput("plot2", height = 350))
+            ),
+            
+            fluidRow(
+             box(width = 12, title = "Electricity generation rates", 
+              splitLayout(
+               numericInput("rate5", "Default +5% renewable", value = 0.10538, step = 0.001),
+               numericInput("rate100", "Opt up 100% renewable", value = 0.13198, step = 0.001)
+               ))),
+            fluidRow(
+             box(width = 12, title = "Electricity delivery rates", 
+              splitLayout(
+               numericInput("custcharge", "Customer account charge", value = 6.43, step = 0.50),
+               numericInput("deliverycharges", "Delivery charges", value = 0.09824, step = 0.00001)
+               ))),
+             fluidRow(
+              box(width = 12, title = "CO[2] avoided by choosing renewable energy", 
+               splitLayout(
+                numericInput("co2avoid", "Pounds of CO[2] avoided per kWh of renewable energy", value = .857, step = 0.001))
+                ))
+              ), # End tabItem ratecompare
+        tabItem(tabName = "about",
                                 h2("About this page"),
                                 fluidPage(
                                   box(width = 12,
