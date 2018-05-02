@@ -53,10 +53,10 @@ ui <- dashboardPage(skin = "black",
              ,box(h2(htmlOutput("co2avoid")))
              ),
             
-            fluidRow(
-              box(plotOutput("plot0", height = 350)),
-              box(plotOutput("plot2", height = 350))
-            ),
+            # fluidRow(
+            #   box(plotOutput("plot0", height = 350)),
+            #   box(plotOutput("plot2", height = 350))
+            # ),
             
             fluidRow(
              box(width = 12, title = "Electricity generation rates", 
