@@ -25,6 +25,34 @@ server <- function(input, output, session) {
     to*(x%/%to + as.logical(x%%to))
   }
   
+  output$report <- downloadHandler(
+    # For PDF output, change this to "report.pdf"
+    filename = "report.pdf",
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- file.path(tempdir(), "report.Rmd")
+      file.copy("report.Rmd", tempReport, overwrite = TRUE)
+      
+      # Set up parameters to pass to Rmd document
+      params <- list(custcharge = input$custcharge,
+                     deliverycharges = input$deliverycharges,
+                     kwhslider = input$kwhslider,
+                     rate5 = input$rate5,
+                     co2avoid = input$co2avoid,
+                     rate100 = input$rate100)
+      
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = params,
+                        envir = new.env(parent = globalenv())
+      )
+    }
+  )
+  
   output$plot1 <- renderPlot({
     par(mar = c(6, 5, 4, 2))
     plotcols <- c("palegreen3","deepskyblue3",
