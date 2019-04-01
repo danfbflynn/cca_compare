@@ -1,11 +1,9 @@
 # Creating Somerville Community Choice Aggregation page to compare old and new rates, and effect of going to 100% renewable on typical monthy bill
-# Started July 2017
-# danfbflynn@gmail.com
+# dan@flynnd.io
 
 # Typical kWh: US avereage 901
 # https://www.eia.gov/tools/faqs/faq.php?id=97&t=3
 # Massachusetts: 602
-
 
 # From MassEnergy: .857 lbs of CO2 per kWh, or 857 lbs per MWH, prevented from going into the atmosphere when you use a kWh or MWH of renewable energy.
 
@@ -14,7 +12,7 @@ library(shinydashboard)
 #library(shinyjs)
 
 ui <- dashboardPage(skin = "black",
-                    dashboardHeader(title = "Comparing Renewable Electricity Options for Somerville", titleWidth = 650),
+                    dashboardHeader(title = "Comparing Renewable Electricity Options for Somerville", titleWidth = 650, tags$li(class = "dropdown", downloadButton("report", "Generate report"))),
                     # Dashboard Menu
                     dashboardSidebar(collapsed = TRUE,
                                      sidebarMenu(
@@ -53,10 +51,10 @@ ui <- dashboardPage(skin = "black",
              ,box(h2(htmlOutput("co2avoid")))
              ),
             
-            fluidRow(
-              box(plotOutput("plot0", height = 350)),
-              box(plotOutput("plot2", height = 350))
-            ),
+            # fluidRow(
+            #   box(plotOutput("plot0", height = 350)),
+            #   box(plotOutput("plot2", height = 350))
+            # ),
             
             fluidRow(
              box(width = 12, title = "Electricity generation rates", 
@@ -75,6 +73,8 @@ ui <- dashboardPage(skin = "black",
                splitLayout(
                 numericInput("co2avoid", "Pounds of CO[2] avoided per kWh of renewable energy", value = .857, step = 0.001))
                 ))
+            
+            
               ), # End tabItem ratecompare
         tabItem(tabName = "about",
                                 h2("About this page"),
