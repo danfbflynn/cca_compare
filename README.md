@@ -1,8 +1,10 @@
 # Comparing Renewable Electricity Options
 
-### Somerville comparison tool online at http://flynnd.io/articles/CCA_Compare/
+This was an experimental tool that I had hosted on a Shiny server, not currently online. The code works, so feel free to fork/improve/serve it somewhere!
 
-Goal: Illustrate how Communicy Choice Aggregation (CCA) plans change amounts of renewable electricity and generation rates
+### Somerville comparison tool 
+
+Goal: Illustrate how Community Choice Aggregation (CCA) plans change amounts of renewable electricity and generation rates
 
 The Somerville Community Choice Electricity (CCE) Aggregation plan began July 2017. See the [Somerville CCE page](https://somervillecce.com) for more information. This tool is being updated to include plans of other Massachusetts municipalities as well.
 
