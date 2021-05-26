@@ -17,6 +17,7 @@ ui <- dashboardPage(skin = "black",
                     dashboardSidebar(collapsed = TRUE,
                                      sidebarMenu(
                                        menuItem("Rate Comparison", tabName = "ratecompare", icon = icon("dashboard")),
+                                       menuItem("Why Choose Renewables?", tabName = "why", icon = icon("question-circle")),
                                        menuItem("About", tabName = "about", icon = icon("th"))
                                      ) # end sidebarMenu
                     ), # end dashboardSidebar
@@ -45,7 +46,9 @@ ui <- dashboardPage(skin = "black",
                                       sliderInput("kwhslider", "Usage in kWh:", 0, 2000, 450))
                                 ),
                                 fluidRow(
+                                  #box(plotlyOutput("plot1", height = 450)),
                                   box(plotOutput("plot1", height = 450)),
+                                  
                                   box(h2(htmlOutput("dollartext"))),
                                   box(h2(htmlOutput("pcttext")))
                                   ,box(h2(htmlOutput("co2avoid")))
@@ -59,7 +62,7 @@ ui <- dashboardPage(skin = "black",
                                 fluidRow(
                                   box(width = 12, title = "Electricity generation rates", 
                                       splitLayout(
-                                        numericInput("rate5", "Default +10% renewable", value = 0.10519, step = 0.001),
+                                        numericInput("rate10", "Default +10% renewable", value = 0.10519, step = 0.001),
                                         numericInput("rate100", "Opt up 100% renewable", value = 0.13219, step = 0.001)
                                       ))),
                                 fluidRow(
@@ -106,7 +109,19 @@ ui <- dashboardPage(skin = "black",
                                       a("Shiny.", href="http://shiny.rstudio.com"),
                                       "Please leave feedback by making an Issue on", a("GitHub", href="https://github.com/flynn-d/somervillecce/"), "or by contacting dan@flynnd.io")
                                 ) # end fluidPage
-                        ) # end tabItem about
+                        ), # end tabItem about
+                        tabItem(tabName = "why",
+                                h2("Why choose renewable sources for your electricity?"),
+                                fluidPage(
+                                  box(width = 12,
+                                      title = "Choosing to opt up",
+                                      "Anyone who pays an electricity bill in Somerville can choose to opt up to 100% renewable electricity. This is one of the most impactful steps that you can take to help reduce greenhouse gas (GHG) emissions that contribute to climate change. Nearly", a("two-thirds of the GHG emissions from Somerville", href="https://www.somervillema.gov/sustainaville/climate-change-basics"), "are from residential energy use. Converting systems in your house from gas or oil to electric is an important step, as is choosing to get your electricity from renewable energy sources like solar and wind", br(),
+                               a(img(src="https://www.somervillema.gov/sites/default/files/ghg-emissions-municipal-sources-2016.png", 
+                                     href="https://www.somervillema.gov/sustainaville/climate-change-basics",
+                                     width = '400px')), br(),
+                               "See more sustainability tips at the",  a("SustainaVille site", href="https://www.somervillema.gov/sites/default/files/somerville-sustainability-guide.pdf"))
+                                ) # end fluidPage
+                        ) # end tabItem why
                       ) # end tabItems
                     ) # end dashboardBody
 ) 
